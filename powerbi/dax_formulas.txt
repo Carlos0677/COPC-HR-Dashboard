@@ -1,0 +1,22 @@
+-- powerbi/dax_formulas.txt
+-- Ejemplos de medidas DAX para Power BI
+
+-- 1) Headcount activo
+Headcount Activo = CALCULATE(COUNTROWS(Employees), Employees[status] = "ACTIVE")
+
+-- 2) Tasa de rotación (sencilla, requiere una medida de terminaciones y headcount promedio)
+Turnover % = DIVIDE([Terminations], [Average Headcount]) * 100
+
+-- 3) Promedio de puntuación COPC
+Promedio COPC = AVERAGE(Operational_Metrics[copc_score])
+
+-- 4) Horas promedio trabajadas (últimos 30 días)
+Horas Promedio 30d = CALCULATE(AVERAGE(Attendance[hours_worked]), DATESINPERIOD('Calendar'[Date], MAX('Calendar'[Date]), -30, DAY))
+
+-- 5) % Empleados certificados COPC
+% Certificados COPC = DIVIDE(CALCULATE(COUNTROWS(Employees), Employees[is_copc_certified] = TRUE), COUNTROWS(Employees))
+
+-- 6) Satisfacción del cliente (último mes)
+CSAT Último Mes = CALCULATE(AVERAGE(Operational_Metrics[customer_satisfaction_score]), PREVIOUSMONTH('Calendar'[Date]))
+
+-- Incluye cualquier medida extra que necesites y las adaptaré
